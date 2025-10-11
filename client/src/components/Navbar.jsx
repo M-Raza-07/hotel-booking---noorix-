@@ -1,8 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
 
+// Book Icon Component for User Menu
 const BookIcon = () => (
   <svg
     className="w-4 h-4 text-gray-700"
@@ -31,28 +32,39 @@ const Navbar = () => {
     { name: "About", path: "/" },
   ];
 
-  const [isScrolled, setIsScrolled] = React.useState(false);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // added useClerk and useUser hooks for authentication
   const { openSignIn } = useClerk();
   const { user } = useUser();
 
+  // added useNavigate and useLocation hooks for navigation
   const navigate = useNavigate();
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setIsScrolled(true);
+      return;
+    } else {
+      setIsScrolled(false);
+    }
+    setIsScrolled((prev) => (location.pathname !== "/" ? true : prev));
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll); // removed useRef for simplicity and added window event listener directly
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <nav
       className={`fixed top-0 left-0  w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
         isScrolled
           ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
-          : "py-4 md:py-6"
+          : "py-4 md:py-6 "
       }`}
     >
       {/* Logo */}
@@ -83,6 +95,7 @@ const Navbar = () => {
             />
           </a>
         ))}
+
         <button
           onClick={() => navigate("/owner")}
           className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
@@ -102,12 +115,13 @@ const Navbar = () => {
             isScrolled && "invert"
           } h-7 transition-all duration-500 cursor-pointer `}
         />
+        {/* If user is Logged in */}
         {user ? (
           <UserButton>
             <UserButton.MenuItems>
               <UserButton.Action
                 label="My Bookings"
-                labelIcon={<BookIcon />}
+                labelIcon={<BookIcon />} // Added book icon here
                 onClick={() => navigate("/my-bookings")}
               />
             </UserButton.MenuItems>
@@ -118,7 +132,9 @@ const Navbar = () => {
             className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
               isScrolled ? "text-white bg-black" : "bg-white text-black"
             }`}
-          ></button>
+          >
+            Login
+          </button>
         )}
       </div>
 
