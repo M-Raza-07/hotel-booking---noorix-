@@ -5,7 +5,7 @@ import StarRating from "./StarRating";
 
 const Testimonials = () => {
   return (
-    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 bg-slate-50 pt-20 pb-30">
+    <div className="flex flex-col items-center px-6 md:px-16 lg:px-24 bg-slate-50 pt-20 pb-25">
       <Title
         title={"What Our Guest Say"}
         subtitle={
