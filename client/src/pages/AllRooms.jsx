@@ -3,6 +3,7 @@ import { assets, facilityIcons, roomsDummyData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import StarRating from "../components/StarRating";
 
+// checkbox and radio button components
 const CheckBox = ({ label, selected = false, onChange = () => {} }) => {
   return (
     <label className="flex gap-3 items-center cursor-pointer mt-2 text-sm">
@@ -151,18 +152,23 @@ const AllRooms = () => {
             openFilters ? "h-auto" : "h-0 lg:h-auto"
           } overflow-hidden transition-all duration-700`}
         >
+          {/* Popular filters */}
           <div className="px-5 pt-5">
             <p className="font-medium text-gray-800 pb-2">Popular filters</p>
             {roomTypes.map((room, index) => (
               <CheckBox key={index} label={room} />
             ))}
           </div>
+
+          {/* Price Range */}
           <div className="px-5 pt-5">
             <p className="font-medium text-gray-800 pb-2">Price Range</p>
             {priceRanges.map((range, index) => (
               <CheckBox key={index} label={`$ ${range}`} />
             ))}
           </div>
+
+          {/* Short By */}
           <div className="px-5 pt-5 pb-7">
             <p className="font-medium text-gray-800 pb-2">Short By</p>
             {sortOptions.map((option, index) => (
