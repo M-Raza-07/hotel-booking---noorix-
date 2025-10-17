@@ -61,12 +61,15 @@ const MyBookings = () => {
 
             {/* --------- Date & Timings --------- */}
             <div className="flex flex-row md:items-center md:gap-12 mt-3 gap-8">
+              {/* Check In */}
               <div>
                 <p>Check-In:</p>
                 <p className="text-gray-500 text-sm">
                   {new Date(booking.checkInDate).toDateString()}
                 </p>
               </div>
+
+              {/* Check out */}
               <div>
                 <p>Check-Out:</p>
                 <p className="text-gray-500 text-sm">
